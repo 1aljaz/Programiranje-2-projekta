@@ -1,6 +1,5 @@
-import os, csv
-
 from settings import *
+import csv, os
 
 def display_history():
     if not os.path.isfile(SEARCHES_CSV):
@@ -27,3 +26,18 @@ def display_history():
     print(f"  Hourly records:   {hourly_count:,}")
     print(f"  Date range:       {dates[0]}  ->  {dates[-1]}  ({len(dates)} day(s))")
     print()
+
+def get_last_top10_terms():
+    if not os.path.isfile(SEARCHES_CSV):
+        return set()
+    last_ts = None
+    terms = set()
+    with open(SEARCHES_CSV, "r", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            ts = row["timestamp"]
+            if last_ts is None or ts > last_ts:
+                last_ts = ts
+                terms = set()
+            if ts == last_ts:
+                terms.add(row["search_term"])
+    return terms
