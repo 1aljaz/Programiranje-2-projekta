@@ -1,6 +1,6 @@
 from settings import *
 import sys, io
-import datetime
+from datetime import datetime
 import csv
 import os
 

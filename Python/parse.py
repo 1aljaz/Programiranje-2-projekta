@@ -1,5 +1,5 @@
 from collections import defaultdict
-import datetime
+from datetime import datetime, timedelta
 import csv
 from statistics import median
 from settings import *
@@ -36,7 +36,6 @@ def generate_demo_spike():
         else:
             traffic = random.randint(8000, 15000)
 
-        from datetime import timedelta
         t = base_time + timedelta(hours=h)
         demo_rows.append({
             "timestamp": t.strftime("%Y-%m-%d %H:%M:%S"),

@@ -1,7 +1,7 @@
 from settings import *
 from collections import defaultdict
 import csv
-import datetime
+from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from statistics import median

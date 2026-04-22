@@ -12,7 +12,7 @@ Usage:
 """
 
 import argparse
-import datetime
+from datetime import datetime
 
 # Settings import constants and file paths
 from settings import *
@@ -69,9 +69,9 @@ def main():
     display_history()
 
     print("  Commands:")
-    print("    python main.py --graph-top       Graph top consistent countries")
-    print("    python main.py --spike           Detect traffic spikes")
-    print("    python main.py --spike US        Graph specific country traffic")
+    print("    python Python/main.py --graph-top       Graph top consistent countries")
+    print("    python Python/main.py --spike           Detect traffic spikes")
+    print("    python Python/main.py --spike US        Graph specific country traffic")
     print()
 
 

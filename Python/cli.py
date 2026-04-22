@@ -1,5 +1,5 @@
 from settings import *
-import datetime
+from datetime import datetime
 import csv
 from parse import *
 from graphs import *
