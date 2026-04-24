@@ -7,7 +7,9 @@ import os
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 def save_hourly_snapshot(raw):
-    """Append one row per country to hourly_traffic.csv."""
+    """
+        Prejme slovar drzav in trendov, ter ga zapiše v hourly_traffic.csv.
+    """
     now = datetime.now()
     ts_str = now.strftime("%Y-%m-%d %H:%M:%S")
     date_str = now.strftime("%Y-%m-%d")
@@ -29,6 +31,11 @@ def save_hourly_snapshot(raw):
 
 
 def save_searches_csv(top10, timestamp):
+    """
+        Prejeme slovar 10 najbolj popularnih iskanj ter čas, ko so je zajemanje podatkov zgodilo.
+        Potem te podatke najprej oštevilči, potem pa jih sortira po št. iskanj. Te podatke potem 
+        zapšie v top_searches.csv.
+    """
     file_exists = os.path.isfile(SEARCHES_CSV)
     date_str = timestamp.strftime("%Y-%m-%d")
     ts_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")

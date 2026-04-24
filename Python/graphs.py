@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from statistics import median
 
-def cmd_graph_top(min_hours=8):
+def cmd_graph_top(min_hours=4):
     """
-    Graph countries that appear in the top 5 traffic for at least
-    `min_hours` distinct hours in the data.
+    Izriše graf za top države, ki so bile vsaj min_hours v top 5.
+    Če ni nobena, prikaže vse, ki so bile vsaj 1h v top 5.
     """
     if not os.path.isfile(HOURLY_CSV):
         print("  No hourly data yet. Run the script a few times first.\n")
@@ -75,7 +75,7 @@ def cmd_graph_top(min_hours=8):
 
 
 def plot_country_traffic(rows, geo, demo=False):
-    """Plot traffic over time for a single country with median line."""
+    """Izriše graf trenda za posamezno državo."""
     times = []
     values = []
     for r in rows:

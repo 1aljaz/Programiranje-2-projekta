@@ -5,6 +5,10 @@ from statistics import median
 from settings import *
 
 def build_global_top10(raw):
+    """
+        Prejme slovar raw in združi trende iskanja po vseh državah, za lažjo pripravo top 10.
+        Vrne seznam top 10 iskanj, sortiranih po skupnem globalnem prometu.
+    """
     merged = defaultdict(lambda: {"total": 0, "countries": {}})
     for geo, trends in raw.items():
         for t in trends:
@@ -17,7 +21,9 @@ def build_global_top10(raw):
     return ranked[:10]
 
 def generate_demo_spike():
-    """Generate fake spike data for demo purposes when no real spikes exist."""
+    """
+        Zgenerira umetne podatke za špice v prometu, ko špice v podatkih ne obstajajo.
+    """
     import random
     random.seed(42)
 
@@ -27,12 +33,11 @@ def generate_demo_spike():
     base_time = datetime(2026, 4, 1, 0, 0, 0)
     demo_geo = "US"
 
-    # 24 hours of normal traffic, then a spike at hours 25-30
     for h in range(36):
         if h < 24:
             traffic = random.randint(8000, 15000)
         elif h < 30:
-            traffic = random.randint(40000, 60000)  # spike!
+            traffic = random.randint(40000, 60000)  # spike
         else:
             traffic = random.randint(8000, 15000)
 
@@ -49,6 +54,9 @@ def generate_demo_spike():
     return demo_rows, demo_geo
 
 def load_hourly_data():
+    """
+        Prebere in vrne podatke iz hourly_traffic.csv.
+    """
     if not os.path.isfile(HOURLY_CSV):
         return []
     with open(HOURLY_CSV, "r", encoding="utf-8") as f:
@@ -57,9 +65,8 @@ def load_hourly_data():
 
 def detect_spikes(rows):
     """
-    For each country, compute median traffic from history.
-    Flag countries whose latest traffic >= SPIKE_THRESHOLD * median.
-    Returns list of (geo, current, median_val, ratio).
+        Za vsako državo, izračuna medijano prometa.
+        Vrne seznam držav katir nazadnji promet je večji kot SPIKE_TRESHOLD * mediana.
     """
     # Group all traffic values by country
     by_geo = defaultdict(list)

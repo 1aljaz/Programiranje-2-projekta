@@ -3,6 +3,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 def parse_traffic(s):
+    """Pretvori niz 's' v celo število, odstrani vejice in plus znake."""
     try:
         return int(s.replace(",", "").replace("+", "").strip())
     except ValueError:
@@ -10,6 +11,7 @@ def parse_traffic(s):
 
 
 def get_trending(geo):
+    """Pridobi popularne iskanja za državo 'geo'"""
     url = f"https://trends.google.com/trending/rss?geo={geo}"
     resp = requests.get(url, timeout=10)
     resp.raise_for_status()
@@ -24,6 +26,7 @@ def get_trending(geo):
 
 
 def fetch_all():
+    """Pridobi popularna iskanja za vseh 20 držav in jih vrne v slovarju."""
     raw = {}
     print("Fetching trends from 20 countries", end="", flush=True)
     for geo in COUNTRIES:

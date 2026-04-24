@@ -28,6 +28,8 @@ from parse import *
 from read import *
 
 def main():
+    """Glavna datoteka za Google Trends Tracker.
+    Obravnava argumente ukazne vrstice, izvaja naloge in prikazuje rezultate."""
     parser = argparse.ArgumentParser(description="Google Trends Tracker")
     parser.add_argument("--graph-top", action="store_true",
                         help="Graph top 5 most consistent countries")

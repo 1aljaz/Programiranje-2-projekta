@@ -1,10 +1,14 @@
 from settings import *
 from datetime import datetime
 import csv
+import os
 from parse import *
 from graphs import *
 
 def display_history():
+    """
+    Prikaže pridobljene podatke o iskanjih in prometu, ter datumski razpon zajetih podatkov.
+    """
     if not os.path.isfile(SEARCHES_CSV):
         return
 
@@ -31,6 +35,7 @@ def display_history():
     print()
 
 def display_top10(top10):
+    """Prikaže top 10 globalnih trendov iskanja z razčlenitvijo po državah in deležem prometa."""
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     print("=" * 90)
     print(f"  TOP 10 GLOBAL TRENDING SEARCHES — {now}")
@@ -47,6 +52,7 @@ def display_top10(top10):
 
 
 def display_traffic_table(raw):
+    """Prikaže tabelo prometa po državah, vključno s skupnim prometom"""
     rows = []
     for geo, trends in raw.items():
         total = sum(t["traffic"] for t in trends)
@@ -65,7 +71,7 @@ def display_traffic_table(raw):
     print()
 
 def cmd_spike(country_code=None):
-    """Detect spikes or graph a specific country's traffic."""
+    """Prikazuje promet po državah in samodejno zazna nenavadne skoke v prometu, ki bi lahko nakazovali na trend"""
     rows = load_hourly_data()
     use_demo = False
 

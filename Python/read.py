@@ -2,6 +2,11 @@ from settings import *
 import csv, os
 
 def display_history():
+    """
+        Funkcija izpiše zgodovino podatkov.
+        In sicer: pot do obeh csv datotek, kolikokrat smo podatke zajeli, koliko je podatkov v hourly_traffic.csv in
+        koliko dni smo podatke zajemali.
+    """
     if not os.path.isfile(SEARCHES_CSV):
         return
 
@@ -28,6 +33,9 @@ def display_history():
     print()
 
 def get_last_top10_terms():
+    """
+        Vrne množico zadnjih 10 najbolj popularnih iskanj.
+    """
     if not os.path.isfile(SEARCHES_CSV):
         return set()
     last_ts = None
