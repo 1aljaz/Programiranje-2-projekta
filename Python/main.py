@@ -13,6 +13,8 @@ Usage:
 
 import argparse
 from datetime import datetime
+import time
+
 
 # Settings import constants and file paths
 from settings import *
