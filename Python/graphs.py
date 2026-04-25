@@ -23,32 +23,30 @@ def cmd_graph_top(min_hours=4):
         print("  No hourly data yet.\n")
         return
 
-    # For each timestamp, find top 5 countries
     by_ts = defaultdict(dict)
     for r in rows:
         by_ts[r["timestamp"]][r["country_code"]] = int(r["total_traffic"])
 
-    # Count how many distinct hours each country was in top 5
+    # Zberemo, koliko ur je vsaka država bila v top 5
     hours_in_top5 = defaultdict(set)
     for ts, countries in by_ts.items():
         top5 = sorted(countries, key=countries.get, reverse=True)[:5]
-        hour = ts[11:13]  # extract HH
+        hour = ts[11:13]  
         for geo in top5:
             hours_in_top5[geo].add(hour)
 
-    # Filter to countries with >= min_hours
+    
     qualified = {geo for geo, hrs in hours_in_top5.items()
                  if len(hrs) >= min_hours}
 
     if not qualified:
-        # Relax threshold to show something
+        # Če nobena država ni dosegla min_hours, prikažemo vse, ki so bile vsaj 1h v top 5
         max_hours = max(len(h) for h in hours_in_top5.values())
         print(f"  No country hit {min_hours}h threshold yet "
               f"(max seen: {max_hours}h).")
         print(f"  Showing all countries that appeared in top 5.\n")
         qualified = {geo for geo, hrs in hours_in_top5.items() if len(hrs) >= 1}
 
-    # Build time series for qualified countries
     series = defaultdict(lambda: {"times": [], "values": []})
     for r in rows:
         geo = r["country_code"]
@@ -57,7 +55,6 @@ def cmd_graph_top(min_hours=4):
             series[geo]["times"].append(t)
             series[geo]["values"].append(int(r["total_traffic"]))
 
-    # Plot
     fig, ax = plt.subplots(figsize=(14, 7))
     for geo in sorted(qualified):
         ax.plot(series[geo]["times"], series[geo]["values"],
@@ -99,7 +96,7 @@ def plot_country_traffic(rows, geo, demo=False):
     ax.axhline(y=spike_line, color="red", linestyle="--", alpha=0.7,
                label=f"Spike threshold ({spike_line:,.0f})")
 
-    # Highlight spike points
+    # Obarvaj anomalije v grafu
     for t, v in zip(times, values):
         if v >= spike_line:
             ax.plot(t, v, "ro", markersize=10, zorder=5)

@@ -1,13 +1,7 @@
 from settings import *
+from parse import *
 import requests
 import xml.etree.ElementTree as ET
-
-def parse_traffic(s):
-    """Pretvori niz 's' v celo število, odstrani vejice in plus znake."""
-    try:
-        return int(s.replace(",", "").replace("+", "").strip())
-    except ValueError:
-        return 0
 
 
 def get_trending(geo):

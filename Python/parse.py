@@ -4,6 +4,13 @@ import csv
 from statistics import median
 from settings import *
 
+def parse_traffic(s):
+    """Pretvori niz 's' v celo število, odstrani vejice in plus znake."""
+    try:
+        return int(s.replace(",", "").replace("+", "").strip())
+    except ValueError:
+        return 0
+
 def build_global_top10(raw):
     """
         Prejme slovar raw in združi trende iskanja po vseh državah, za lažjo pripravo top 10.
@@ -68,7 +75,6 @@ def detect_spikes(rows):
         Za vsako državo, izračuna medijano prometa.
         Vrne seznam držav katir nazadnji promet je večji kot SPIKE_TRESHOLD * mediana.
     """
-    # Group all traffic values by country
     by_geo = defaultdict(list)
     latest_ts = ""
     for r in rows:
@@ -76,7 +82,6 @@ def detect_spikes(rows):
         if r["timestamp"] > latest_ts:
             latest_ts = r["timestamp"]
 
-    # Get latest values
     latest = {}
     for r in rows:
         if r["timestamp"] == latest_ts:

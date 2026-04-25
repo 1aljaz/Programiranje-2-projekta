@@ -5,9 +5,12 @@ import os
 from parse import *
 from graphs import *
 
+
 def display_history():
     """
-    Prikaže pridobljene podatke o iskanjih in prometu, ter datumski razpon zajetih podatkov.
+        Funkcija izpiše zgodovino podatkov.
+        In sicer: pot do obeh csv datotek, kolikokrat smo podatke zajeli, koliko je podatkov v hourly_traffic.csv in
+        koliko dni smo podatke zajemali.
     """
     if not os.path.isfile(SEARCHES_CSV):
         return
@@ -76,7 +79,7 @@ def cmd_spike(country_code=None):
     use_demo = False
 
     if country_code:
-        # Graph specific country
+        # izriše specifično državo, če je podana
         geo = country_code.upper()
         geo_rows = [r for r in rows if r["country_code"] == geo]
         if not geo_rows:
@@ -85,7 +88,6 @@ def cmd_spike(country_code=None):
         plot_country_traffic(geo_rows, geo)
         return
 
-    # Auto-detect spikes
     if len(rows) < 2:
         rows, demo_geo = generate_demo_spike()
         use_demo = True
@@ -93,7 +95,7 @@ def cmd_spike(country_code=None):
     spikes = detect_spikes(rows)
 
     if not spikes and not use_demo:
-        # No spikes in real data — show demo
+        # Če ni zaznanih skokov, prikažemo demo podatke.
         demo_rows, demo_geo = generate_demo_spike()
         spikes_demo = detect_spikes(demo_rows)
         print("=" * 90)
@@ -106,7 +108,6 @@ def cmd_spike(country_code=None):
         plot_country_traffic(demo_rows, demo_geo, demo=True)
         return
 
-    # Real spikes
     print("=" * 90)
     print("  SPIKE DETECTION")
     print(f"  Threshold: {SPIKE_THRESHOLD}x median traffic")
@@ -117,7 +118,6 @@ def cmd_spike(country_code=None):
             print(f"  *** {COUNTRIES.get(geo, geo):<20} Current: {current:>10,}   "
                   f"Median: {med:>10,.0f}   Ratio: {ratio:.1f}x  *** SPIKE ***")
         print()
-        # Graph the biggest spike
         biggest_geo = spikes[0][0]
         geo_rows = [r for r in rows if r["country_code"] == biggest_geo]
         plot_country_traffic(geo_rows, biggest_geo)
