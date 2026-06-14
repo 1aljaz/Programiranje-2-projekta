@@ -1,4 +1,3 @@
-// Mirrors sf::Event. Only the fields the games actually use are kept.
 public class Event {
     public enum Type { Closed, KeyPressed, MouseButtonPressed, MouseMoved, TextEntered }
 
