@@ -1,0 +1,9 @@
+﻿  pong.cpp
+C:\Users\Klemen\Desktop\Mini-games-first_branch\pong.cpp(82,27): warning C4305: '=': truncation from 'double' to 'float'
+x64\Release\pong.obj : warning LNK4042: object specified more than once; extras ignored
+  Generating code
+  2 of 655 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Multigame.vcxproj -> C:\Users\Klemen\Desktop\Mini-games-first_branch\x64\Release\Multigame.exe

@@ -1,0 +1,3 @@
+﻿  pong.cpp
+C:\Users\Klemen\Desktop\Mini-games-first_branch\pong.cpp(82,27): warning C4305: '=': truncation from 'double' to 'float'
+  Multigame.vcxproj -> C:\Users\Klemen\Desktop\Mini-games-first_branch\x64\Debug\Multigame.exe
